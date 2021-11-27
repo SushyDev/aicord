@@ -75,7 +75,9 @@ client.on('ready', () => {
         const blacklistedchannel = ['', ''];
         const blacklistedguild = ['', ''];
 
-        console.log(ai);
+        for (const category in ai) {
+            console.log(category)
+        }
 
         var channelName;
         var guildName;
