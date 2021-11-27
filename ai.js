@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const guildNames = client.guilds.map((g) => g.name).join('\n');
 const fs = require('fs');
+require('dotenv').config();
 client.login(process.env.TOKEN);
 client.on('ready', () => {
     {
