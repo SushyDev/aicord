@@ -1,0 +1,13 @@
+{
+  "name": "Captcha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ai.js",
+  "scripts": {
+    "start": "node ai.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "express": "^4.16.4"
+  }
+}
