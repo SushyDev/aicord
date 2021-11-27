@@ -86,6 +86,8 @@ client.on('ready', () => {
 
             for (const category in ai) {
                 if (message.content.toLowerCase().includes(category)) {
+                    //Random chance to ignore (for legitemecy)
+                    if (Math.random() < 0.3) return;
                     setTimeout(() => {
                         message.channel.send(ai[category][Math.floor(Math.random() * ai[category].length)]).catch((err) => message.channel.send('peng'));
                     }, (Math.floor(Math.random() * 5) + 1) * 1000);
