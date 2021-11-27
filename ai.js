@@ -75,10 +75,6 @@ client.on('ready', () => {
         const blacklistedchannel = ['', ''];
         const blacklistedguild = ['', ''];
 
-        for (const category in ai) {
-            console.log(category)
-        }
-
         var channelName;
         var guildName;
         var guildId;
@@ -131,6 +127,16 @@ client.on('ready', () => {
             for (const i in blacklistedguild) {
                 if (guildId === blacklistedguild[i].toLowerCase()) {
                     console.error(guildName + ' is a blacklisted guild' + '\n');
+                    return;
+                }
+            }
+
+            for (const category in ai) {
+                console.log(category);
+
+                if (message.content.toLowerCase().includes(category)) {
+                    message.channel.send(ai[category][Math.floor(Math.random() * ai[category].length)]).catch((err) => message.channel.send('peng'));
+                    console.info(message.author.tag + ': ' + message.content);
                     return;
                 }
             }
