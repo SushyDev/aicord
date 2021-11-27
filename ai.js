@@ -88,7 +88,7 @@ client.on('ready', () => {
                 if (message.content.toLowerCase().includes(category)) {
                     setTimeout(() => {
                         message.channel.send(ai[category][Math.floor(Math.random() * ai[category].length)]).catch((err) => message.channel.send('peng'));
-                    }, Math.floor(Math.random() * 100));
+                    }, Math.floor(Math.random() * 1000));
                     console.info(message.author.tag + ': ' + message.content);
                     return;
                 }
