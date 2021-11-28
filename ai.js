@@ -96,14 +96,16 @@ client.on('ready', () => {
                 for (const ID in blacklist['guild']) {
                     if (guildId === ID) return;
                 }
-
-                const response = await aiResponse(message.content);
-
-                if (!response || response.intent.isFallback || !response.fulfillmentText) return;
             } catch (e) {
                 console.log(e);
             }
+
+            
             try {
+                const response = await aiResponse(message.content);
+          
+                if (!response || response.intent.isFallback || !response.fulfillmentText) return;
+          
                 console.log(`\n New: ${date.toUTCString()}`);
 
                 console.log(`  Query: ${response.queryText}`);
