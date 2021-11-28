@@ -57,38 +57,39 @@ client.on('ready', () => {
 
         let inVC = false;
 
-        try {
-            client.on('message', async (message) => {
-                if (message.author.id === client.user.id || !message.content) return;
+        client.on('message', async (message) => {
+            if (message.author.id === client.user.id || !message.content) return;
 
-                for (const ID in blacklist['user']) {
-                    if (message.author.id === ID) return;
-                }
-                for (const ID in blacklist['channel']) {
-                    if (channelId === ID) return;
-                }
-                for (const ID in blacklist['guild']) {
-                    if (guildId === ID) return;
-                }
+            for (const ID in blacklist['user']) {
+                if (message.author.id === ID) return;
+            }
+            for (const ID in blacklist['channel']) {
+                if (channelId === ID) return;
+            }
+            for (const ID in blacklist['guild']) {
+                if (guildId === ID) return;
+            }
 
-                const response = await aiResponse(message.content);
+            const response = await aiResponse(message.content);
 
-                if (!response || response.intent.isFallback || !response.fulfillmentText) return;
+            if (!response || response.intent.isFallback || !response.fulfillmentText) return;
 
-                console.log(`\n New: ${date.toUTCString()}`);
+            console.log(`\n New: ${date.toUTCString()}`);
 
-                console.log(`  Query: ${response.queryText}`);
+            console.log(`  Query: ${response.queryText}`);
 
-                console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
-                if (response.intent) {
-                    console.log(`  Intent: ${response.intent.displayName}`);
-                } else {
-                    console.log('  No intent matched.');
-                }
+            console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
+            if (response.intent) {
+                console.log(`  Intent: ${response.intent.displayName}`);
+            } else {
+                console.log('  No intent matched.');
+            }
 
-                // setTimeout(() => {
-                message.channel.send(response.fulfillmentText);
-                // }, (Math.floor(Math.random() * 3) + 1) * 1000);
+            // setTimeout(() => {
+            message.channel.send(response.fulfillmentText);
+            // }, (Math.floor(Math.random() * 3) + 1) * 1000);
+
+            try {
                 if (message.content.toLowerCase().includes('voice')) {
                     const channel = message.member.voiceChannel;
                     if (!inVC) {
@@ -103,10 +104,10 @@ client.on('ready', () => {
                         message.channel.send('<@' + message.author.id + '>' + ' made me leave a voice channel');
                     }
                 }
-            });
-        } catch (e) {
-            console.log(e);
-        }
+            } catch (e) {
+                console.log(e);
+            }
+        });
 
         {
             console.info('v---------Bot-Info----------v');
@@ -116,4 +117,8 @@ client.on('ready', () => {
             console.info('^---------Bot-Info----------^');
         }
     }
+});
+
+process.on('uncaughtException', (err) => {
+    // ...
 });
