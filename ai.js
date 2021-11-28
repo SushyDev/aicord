@@ -99,20 +99,25 @@ client.on('ready', () => {
             const response = await aiResponse(message.content);
 
             if (!response || response.intent.isFallback || !response.fulfillmentText) return;
-            console.log(`\n New: ${date.toUTCString()}`);
 
-            console.log(`  Query: ${response.queryText}`);
+            try {
+                console.log(`\n New: ${date.toUTCString()}`);
 
-            console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
-            if (response.intent) {
-                console.log(`  Intent: ${response.intent.displayName}`);
-            } else {
-                console.log('  No intent matched.');
+                console.log(`  Query: ${response.queryText}`);
+
+                console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
+                if (response.intent) {
+                    console.log(`  Intent: ${response.intent.displayName}`);
+                } else {
+                    console.log('  No intent matched.');
+                }
+
+                setTimeout(() => {
+                    message.channel.send(response.fulfillmentText);
+                }, (Math.floor(Math.random() * 3) + 1) * 1000);
+            } catch (e) {
+                console.log(e);
             }
-
-            setTimeout(() => {
-                message.channel.send(response.fulfillmentText);
-            }, (Math.floor(Math.random() * 3) + 1) * 1000);
 
             try {
                 if (message.content.toLowerCase().includes('voice')) {
