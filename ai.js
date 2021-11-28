@@ -6,6 +6,9 @@ const uuid = require('uuid');
 const keyFilename = './key.json';
 require('dotenv').config();
 
+const date = new Date();
+date.setHours(date.getHours() + 1);
+
 const aiResponse = async (message) => {
     // Create a new session
     const sessionClient = new Dialogflow.SessionsClient({
@@ -78,7 +81,7 @@ client.on('ready', () => {
         client.on('message', async (message) => {
             if (message.author.id === client.user.id) return;
 
-            console.log(new Date().toDateString);
+            console.log(`New: ${date.toUTCString()}`);
 
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
