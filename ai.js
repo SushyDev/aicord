@@ -11,7 +11,7 @@ async function runSample() {
 
     // Create a new session
   const sessionClient = new Dialogflow.SessionsClient({
-      keyFilename: Path.join(__dirname, './key.json'),
+      keyFilename: './key.json',
   });
     
     const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
@@ -136,32 +136,32 @@ client.on('ready', () => {
             //     }
             // }
 
-            const projectId = process.env.PROJECT_ID;
-            try {
-                const sessionId = uuid.v4();
-                const sessionClient = new dialogflow.SessionClient({
-                    keyFilename: './key.json',
-                });
-                const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-                const request = {
-                    session: sessionPath,
-                    queryInput: {
-                        text: {
-                            text: message.content,
-                            languageCode: 'en-US',
-                        },
-                    },
-                };
+            // const projectId = process.env.PROJECT_ID;
+            // try {
+            //     const sessionId = uuid.v4();
+            //     const sessionClient = new dialogflow.SessionClient({
+            //         keyFilename: './key.json',
+            //     });
+            //     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
+            //     const request = {
+            //         session: sessionPath,
+            //         queryInput: {
+            //             text: {
+            //                 text: message.content,
+            //                 languageCode: 'en-US',
+            //             },
+            //         },
+            //     };
 
-                const response = await sessionClient.detectIntent(request);
-                const result = responses[0].queryResult.fulfillmenText;
+            //     const response = await sessionClient.detectIntent(request);
+            //     const result = responses[0].queryResult.fulfillmenText;
 
-                console.log('result', result);
+            //     console.log('result', result);
 
-                message.channel.send(result);
-            } catch (e) {
-                console.log(e);
-            }
+            //     message.channel.send(result);
+            // } catch (e) {
+            //     console.log(e);
+            // }
 
             if (message.content.toLowerCase().includes('voice')) {
                 const channel = message.member.voiceChannel;
