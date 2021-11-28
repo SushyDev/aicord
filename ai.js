@@ -3,15 +3,13 @@ const client = new Discord.Client();
 const fs = require('fs');
 const Dialogflow = require('@google-cloud/dialogflow');
 const uuid = require('uuid');
+const keyFilename = './key.json';
 require('dotenv').config();
 
 const aiResponse = async (message) => {
-    // A unique identifier for the given session
-    const sessionId = uuid.v4();
-
     // Create a new session
     const sessionClient = new Dialogflow.SessionsClient({
-        keyFilename: './key.json',
+        keyFilename,
     });
 
     const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
@@ -32,6 +30,32 @@ const aiResponse = async (message) => {
     // Send request and log result
     const responses = await sessionClient.detectIntent(request);
     console.log('Detected intent');
+    const result = responses[0].queryResult;
+    return result;
+};
+
+const aiTrain = async (message) => {
+    const sessionClient = new Dialogflow.SessionsClient({
+        keyFilename,
+    });
+
+    const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
+
+    // The text query request.
+    const request = {
+        session: sessionPath,
+        queryInput: {
+            text: {
+                // The query to send to the dialogflow agent
+                text: message,
+                // The language used by the client (en-US)
+                languageCode: 'en-US',
+            },
+        },
+    };
+
+    // Send request and log result
+    const responses = await sessionClient.Train(request);
     const result = responses[0].queryResult;
     return result;
 };
@@ -67,7 +91,10 @@ client.on('ready', () => {
 
             const response = await aiResponse(message.content);
 
-            console.log(response);
+            //Dumbass
+            if (response.intent.isFallback) return;
+
+            console.log(response.intent.isFallback);
 
             console.log(`  Query: ${response.queryText}`);
             console.log(`  Response: ${response.fulfillmentText}`);
@@ -79,19 +106,23 @@ client.on('ready', () => {
 
             message.channel.send(response.fulfillmentText);
 
-            if (message.content.toLowerCase().includes('voice')) {
-                const channel = message.member.voiceChannel;
-                if (!inVC) {
-                    inVC != inVC;
-                    channel.join();
-                    console.info(message.author.username + ' made me join a voice channel in: ' + guildName + '\n');
-                    message.channel.send('<@' + message.author.id + '>' + ' made me join a voice channel');
-                } else {
-                    inVC != inVC;
-                    channel.leave();
-                    console.info(message.author.username + ' made me leave the voice channel in: ' + guildName + '\n');
-                    message.channel.send('<@' + message.author.id + '>' + ' made me leave a voice channel');
+            try {
+                if (message.content.toLowerCase().includes('voice')) {
+                    const channel = message.member.voiceChannel;
+                    if (!inVC) {
+                        inVC != inVC;
+                        channel.join();
+                        console.info(message.author.username + ' made me join a voice channel in: ' + guildName + '\n');
+                        message.channel.send('<@' + message.author.id + '>' + ' made me join a voice channel');
+                    } else {
+                        inVC != inVC;
+                        channel.leave();
+                        console.info(message.author.username + ' made me leave the voice channel in: ' + guildName + '\n');
+                        message.channel.send('<@' + message.author.id + '>' + ' made me leave a voice channel');
+                    }
                 }
+            } catch (e) {
+                console.log(e);
             }
         });
 
