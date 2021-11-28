@@ -106,7 +106,7 @@ client.on('ready', () => {
 
             console.log(`  Query: ${response.queryText}`);
 
-            console.log(`  Response:\n Guild: ${message.guild.name} \n Channel: ${message.channel.name} \n Message: ${response.fulfillmentText}`);
+            console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
             if (response.intent) {
                 console.log(`  Intent: ${response.intent.displayName}`);
             } else {
