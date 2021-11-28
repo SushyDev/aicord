@@ -86,8 +86,7 @@ client.on('ready', () => {
         client.on('message', async (message) => {
             if (message.author.id === client.user.id || !message.content) return;
 
-            console.log(`\n New: ${date.toUTCString()}`);
-
+            
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
             }
@@ -99,10 +98,9 @@ client.on('ready', () => {
             }
 
             const response = await aiResponse(message.content);
-
+            
             if (!response) return;
-
-            console.log(message.guild.name, message.channel.name);
+            console.log(`\n New: ${date.toUTCString()}`);
 
             console.log(`  Query: ${response.queryText}`);
 
