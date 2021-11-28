@@ -86,7 +86,7 @@ client.on('ready', () => {
         client.on('message', async (message) => {
             if (message.author.id === client.user.id) return;
 
-            console.log(`New: ${date.toUTCString()}`);
+            console.log(` New: ${date.toUTCString()}`);
 
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
@@ -137,6 +137,8 @@ client.on('ready', () => {
             } catch (e) {
                 console.log(e);
             }
+
+            console.log('\n');
         });
 
         {
