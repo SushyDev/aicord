@@ -143,7 +143,7 @@ client.on('ready', () => {
             console.info('v---------Bot-Info----------v');
             console.info('Logged into: ' + client.user.username);
             console.info('Active in: ' + list);
-            console.info('^---------Bot-Info----------^' + '\n');
+            console.info('^---------Bot-Info----------^');
         }
     }
 });
