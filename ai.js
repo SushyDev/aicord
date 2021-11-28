@@ -101,10 +101,7 @@ client.on('ready', () => {
                     const sessionClient = new dialogflow.SessionClient({
                         keyFilename: "./key.json"
                     });
-                    const sessionPath = sessionClient.projectAgentSessionPath(
-                        projectId,
-                        sessionId,
-                    );
+                    const sessionPath = sessionClient.projectAgentSessionPath(projectId,sessionId);
                     const request = {
                         session: sessionPath,
                         queryInput: {
