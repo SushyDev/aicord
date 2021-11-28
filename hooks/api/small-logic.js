@@ -4,13 +4,14 @@ module.exports = async (req, res) => {
     if (req.body.queryResult.intent.displayName === 'Default time') {
         console.log('IS TIME');
         res.send({
-            fulfillmentMessages: [
+            fulfillment_messages: [
                 {
                     text: {
                         text: [`The time is ${new Date().toUTCString()}`],
                     },
                 },
             ],
+            fulfillmentText: 'THE TIME IS NOTHING',
         });
     }
 };
