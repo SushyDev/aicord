@@ -5,19 +5,16 @@ const dialogflow = require('@google-cloud/dialogflow');
 const uuid = require('uuid');
 require('dotenv').config();
 
-async function runSample(projectId = process.env.PROJECT_ID) {
+async function runSample() {
     // A unique identifier for the given session
     const sessionId = uuid.v4();
 
     // Create a new session
-                    const sessionClient = new dialogflow.SessionClient({
-                        keyFilename: './key.json',
-                    });
-
-
-
-
-    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
+  const sessionClient = new Dialogflow.SessionsClient({
+      keyFilename: Path.join(__dirname, './key.json'),
+  });
+    
+    const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
 
     // The text query request.
     const request = {
