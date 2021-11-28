@@ -84,7 +84,7 @@ client.on('ready', () => {
         let inVC = false;
 
         client.on('message', async (message) => {
-            if (message.author.id === client.user.id) return;
+            if (message.author.id === client.user.id || !message.content) return;
 
             console.log(`\n New: ${date.toUTCString()}`);
 
@@ -102,7 +102,7 @@ client.on('ready', () => {
 
             if (!response) return;
 
-            console.log(message.guild.name, message.channel.name)
+            console.log(message.guild.name, message.channel.name);
 
             console.log(`  Query: ${response.queryText}`);
 
