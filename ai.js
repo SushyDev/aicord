@@ -29,7 +29,6 @@ const aiResponse = async (message) => {
 
     // Send request and log result
     const responses = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
     const result = responses[0].queryResult;
     return result;
 };
@@ -92,9 +91,10 @@ client.on('ready', () => {
             const response = await aiResponse(message.content);
 
             //Dumbass
-            if (response.intent.isFallback) return;
-
-            console.log(response.intent.isFallback);
+            if (response.intent.isFallback) {
+                console.info("Didn't understand");
+                return;
+            }
 
             console.log(`  Query: ${response.queryText}`);
             console.log(`  Response: ${response.fulfillmentText}`);
