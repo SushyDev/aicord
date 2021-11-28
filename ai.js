@@ -5,15 +5,15 @@ const Dialogflow = require('@google-cloud/dialogflow');
 const uuid = require('uuid');
 require('dotenv').config();
 
-async function runSample() {
+const aiResponse = async (message) => {
     // A unique identifier for the given session
     const sessionId = uuid.v4();
 
     // Create a new session
-  const sessionClient = new Dialogflow.SessionsClient({
-      keyFilename: './key.json',
-  });
-    
+    const sessionClient = new Dialogflow.SessionsClient({
+        keyFilename: './key.json',
+    });
+
     const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
 
     // The text query request.
@@ -22,7 +22,7 @@ async function runSample() {
         queryInput: {
             text: {
                 // The query to send to the dialogflow agent
-                text: 'hello',
+                text: message,
                 // The language used by the client (en-US)
                 languageCode: 'en-US',
             },
@@ -40,9 +40,8 @@ async function runSample() {
     } else {
         console.log('  No intent matched.');
     }
-}
-
-runSample();
+    return result;
+};
 
 client.login(process.env.TOKEN);
 client.on('ready', () => {
@@ -125,6 +124,9 @@ client.on('ready', () => {
             for (const ID in blacklist['guild']) {
                 if (guildId === ID) return;
             }
+
+            const response = await aiResponse(message.content)
+            message.channel.send(response.fulfillmentText)
 
             // for (const category in ai) {
             //     if (message.content.toLowerCase().includes(category)) {
