@@ -56,7 +56,7 @@ const aiTrain = async (message) => {
                 // The query to send to the dialogflow agent
                 text: message,
                 // The language used by the client (en-US)
-                languageCode: 'en-US',
+                languageCode: 'en',
             },
         },
     };
