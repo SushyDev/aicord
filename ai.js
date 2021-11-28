@@ -10,7 +10,13 @@ async function runSample(projectId = process.env.PROJECT_ID) {
     const sessionId = uuid.v4();
 
     // Create a new session
-    const sessionClient = new dialogflow.SessionsClient();
+                    const sessionClient = new dialogflow.SessionClient({
+                        keyFilename: './key.json',
+                    });
+
+
+
+
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
     // The text query request.
