@@ -118,7 +118,9 @@ client.on('ready', () => {
                 console.log('result', result);
 
                 message.channel.send(result);
-            } catch (e) {}
+            } catch (e) {
+                console.log(e)
+            }
 
             if (message.content.toLowerCase().includes('voice')) {
                 const channel = message.member.voiceChannel;
