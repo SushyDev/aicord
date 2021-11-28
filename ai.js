@@ -58,7 +58,9 @@ client.on('ready', () => {
         let inVC = false;
 
         client.on('message', async (message) => {
-            if (message.author.id === client.user.id || !message.content || channel.permissionsFor(client.user).has('SEND_MESSAGES', false)) return;
+            console.log(message.channel.permissionsFor(client.user).has('SEND_MESSAGES', false));
+
+            if (message.author.id === client.user.id || !message.content) return;
 
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
