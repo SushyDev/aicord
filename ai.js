@@ -107,7 +107,6 @@ client.on('ready', () => {
             //Dumbass
             if (response.intent.isFallback) {
                 console.info("  Didn't understand");
-                return;
             }
 
             console.log(`  Response: ${response.fulfillmentText}`);
