@@ -74,11 +74,7 @@ client.on('ready', () => {
 
             if (!response || response.intent.isFallback || !response.fulfillmentText) return;
 
-            console.log(`\n New: ${date.toUTCString()}`);
-
-            console.log(`  Query: ${response.queryText}`);
-
-            console.log(`  Response:\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Message: ${response.fulfillmentText}`);
+            console.log(`\n New: ${date.toUTCString()}\n Message: ${message.content}\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Reply: ${response.fulfillmentText}`);
             if (response.intent) {
                 console.log(`  Intent: ${response.intent.displayName}`);
             } else {
