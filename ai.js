@@ -74,11 +74,11 @@ client.on('ready', () => {
 
             if (!response || response.intent.isFallback || !response.fulfillmentText) return;
 
-            console.log(`\n New: ${date.toUTCString()}\n  Message: ${message.content}\n   Guild: ${message.guild.name}\n   Channel: ${message.channel.name}\n   Reply: ${response.fulfillmentText}`);
+            console.log(`\n New: ${date.toUTCString()}\n   Message: ${message.content}\n     Guild: ${message.guild.name}\n     Channel: ${message.channel.name}\n     Reply: ${response.fulfillmentText}`);
             if (response.intent) {
-                console.log(`  Intent: ${response.intent.displayName}`);
+                console.log(`   Intent: ${response.intent.displayName}`);
             } else {
-                console.log('  No intent matched.');
+                console.log('   No intent matched.');
             }
 
             // setTimeout(() => {
