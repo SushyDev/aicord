@@ -112,7 +112,7 @@ client.on('ready', () => {
             }
 
             //Dumbass
-            if (!response.intent.isFallback) {
+            if (!response.intent.isFallback && response.fulfillmentText) {
                 message.channel.send(response.fulfillmentText);
             }
 
