@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require('fs');
+const dialogflow = require('@google-cloud/dialogflow');
 require('dotenv').config();
 client.login(process.env.TOKEN);
 client.on('ready', () => {
@@ -84,13 +85,42 @@ client.on('ready', () => {
                 if (guildId === ID) return;
             }
 
-            for (const category in ai) {
-                if (message.content.toLowerCase().includes(category)) {
-                    setTimeout(() => {
-                        message.channel.send(ai[category][Math.floor(Math.random() * ai[category].length)]).catch((err) => message.channel.send('peng'));
-                    }, (Math.floor(Math.random() * 5) + 1) * 1000);
-                    console.info(message.author.tag + ': ' + message.content);
-                    return;
+            // for (const category in ai) {
+            //     if (message.content.toLowerCase().includes(category)) {
+            //         setTimeout(() => {
+            //             message.channel.send(ai[category][Math.floor(Math.random() * ai[category].length)]).catch((err) => message.channel.send('peng'));
+            //         }, (Math.floor(Math.random() * 5) + 1) * 1000);
+            //         console.info(message.author.tag + ': ' + message.content);
+            //         return;
+            //     }
+            // }
+
+            const callapibot = async (projectId = process.env.PROJECT_ID) => {
+                try {
+                    const sessionId = uuid.v4();
+                    const sessionClient = new dialogflow.SessionClient({
+                        keyFilename: "./key.json"
+                    });
+                    const sessionPath = sessionClient.projectAgentSessionPath(
+                        projectId,
+                        sessionId,
+                    );
+                    const request = {
+                        session: sessionPath,
+                        queryInput: {
+                            text: {
+                                text: message.content,
+                                languageCode: "en-US"
+                            }
+                        }
+                    }
+
+                    const response = await sessionClient.detectIntent(request)
+                    const result = responses[0].queryResult.fulfillmenText;
+
+                    console.log('result', result);
+
+                    message.channel.send(result);
                 }
             }
 
