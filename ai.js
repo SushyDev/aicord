@@ -113,7 +113,9 @@ client.on('ready', () => {
 
             //Dumbass
             if (!response.intent.isFallback && response.fulfillmentText) {
-                message.channel.send(response.fulfillmentText);
+                setTimeout(() => {
+                    message.channel.send(response.fulfillmentText);
+                }, (Math.floor(Math.random() * 3) + 1) * 1000);
             }
 
             try {
