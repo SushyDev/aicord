@@ -84,22 +84,25 @@ client.on('ready', () => {
         let inVC = false;
 
         client.on('message', async (message) => {
-            if (message.author.id === client.user.id || !message.content) return;
+            try {
+                if (message.author.id === client.user.id || !message.content) return;
 
-            for (const ID in blacklist['user']) {
-                if (message.author.id === ID) return;
+                for (const ID in blacklist['user']) {
+                    if (message.author.id === ID) return;
+                }
+                for (const ID in blacklist['channel']) {
+                    if (channelId === ID) return;
+                }
+                for (const ID in blacklist['guild']) {
+                    if (guildId === ID) return;
+                }
+
+                const response = await aiResponse(message.content);
+
+                if (!response || response.intent.isFallback || !response.fulfillmentText) return;
+            } catch (e) {
+                console.log(e);
             }
-            for (const ID in blacklist['channel']) {
-                if (channelId === ID) return;
-            }
-            for (const ID in blacklist['guild']) {
-                if (guildId === ID) return;
-            }
-
-            const response = await aiResponse(message.content);
-
-            if (!response || response.intent.isFallback || !response.fulfillmentText) return;
-
             try {
                 console.log(`\n New: ${date.toUTCString()}`);
 
