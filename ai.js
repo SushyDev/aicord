@@ -41,32 +41,6 @@ const aiResponse = async (message) => {
     }
 };
 
-const aiTrain = async (message) => {
-    const sessionClient = new Dialogflow.SessionsClient({
-        keyFilename,
-    });
-
-    const sessionPath = sessionClient.projectAgentSessionPath(process.env.PROJECT_ID, uuid.v4());
-
-    // The text query request.
-    const request = {
-        session: sessionPath,
-        queryInput: {
-            text: {
-                // The query to send to the dialogflow agent
-                text: message,
-                // The language used by the client (en-US)
-                languageCode: 'en',
-            },
-        },
-    };
-
-    // Send request and log result
-    const responses = await sessionClient.Train(request);
-    const result = responses[0].queryResult;
-    return result;
-};
-
 client.login(process.env.TOKEN);
 client.on('ready', () => {
     {
@@ -83,8 +57,8 @@ client.on('ready', () => {
 
         let inVC = false;
 
-        client.on('message', async (message) => {
-            try {
+        try {
+            client.on('message', async (message) => {
                 if (message.author.id === client.user.id || !message.content) return;
 
                 for (const ID in blacklist['user']) {
@@ -96,16 +70,11 @@ client.on('ready', () => {
                 for (const ID in blacklist['guild']) {
                     if (guildId === ID) return;
                 }
-            } catch (e) {
-                console.log(e);
-            }
 
-            
-            try {
                 const response = await aiResponse(message.content);
-          
+
                 if (!response || response.intent.isFallback || !response.fulfillmentText) return;
-          
+
                 console.log(`\n New: ${date.toUTCString()}`);
 
                 console.log(`  Query: ${response.queryText}`);
@@ -117,14 +86,9 @@ client.on('ready', () => {
                     console.log('  No intent matched.');
                 }
 
-                setTimeout(() => {
-                    message.channel.send(response.fulfillmentText);
-                }, (Math.floor(Math.random() * 3) + 1) * 1000);
-            } catch (e) {
-                console.log(e);
-            }
-
-            try {
+                // setTimeout(() => {
+                message.channel.send(response.fulfillmentText);
+                // }, (Math.floor(Math.random() * 3) + 1) * 1000);
                 if (message.content.toLowerCase().includes('voice')) {
                     const channel = message.member.voiceChannel;
                     if (!inVC) {
@@ -139,10 +103,10 @@ client.on('ready', () => {
                         message.channel.send('<@' + message.author.id + '>' + ' made me leave a voice channel');
                     }
                 }
-            } catch (e) {
-                console.log(e);
-            }
-        });
+            });
+        } catch (e) {
+            console.log(e);
+        }
 
         {
             console.info('v---------Bot-Info----------v');
