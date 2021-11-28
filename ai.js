@@ -104,11 +104,6 @@ client.on('ready', () => {
 
             console.log(`  Query: ${response.queryText}`);
 
-            //Dumbass
-            if (response.intent.isFallback) {
-                console.info("  Didn't understand");
-            }
-
             console.log(`  Response: ${response.fulfillmentText}`);
             if (response.intent) {
                 console.log(`  Intent: ${response.intent.displayName}`);
@@ -116,7 +111,10 @@ client.on('ready', () => {
                 console.log('  No intent matched.');
             }
 
-            message.channel.send(response.fulfillmentText);
+            //Dumbass
+            if (response.intent.isFallback) {
+                message.channel.send(response.fulfillmentText);
+            }
 
             try {
                 if (message.content.toLowerCase().includes('voice')) {
