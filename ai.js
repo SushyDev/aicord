@@ -95,31 +95,30 @@ client.on('ready', () => {
             //     }
             // }
 
-            const callapibot = async (projectId = process.env.PROJECT_ID) => {
-                try {
-                    const sessionId = uuid.v4();
-                    const sessionClient = new dialogflow.SessionClient({
-                        keyFilename: './key.json',
-                    });
-                    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-                    const request = {
-                        session: sessionPath,
-                        queryInput: {
-                            text: {
-                                text: message.content,
-                                languageCode: 'en-US',
-                            },
+            const projectId = process.env.PROJECT_ID;
+            try {
+                const sessionId = uuid.v4();
+                const sessionClient = new dialogflow.SessionClient({
+                    keyFilename: './key.json',
+                });
+                const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
+                const request = {
+                    session: sessionPath,
+                    queryInput: {
+                        text: {
+                            text: message.content,
+                            languageCode: 'en-US',
                         },
-                    };
+                    },
+                };
 
-                    const response = await sessionClient.detectIntent(request);
-                    const result = responses[0].queryResult.fulfillmenText;
+                const response = await sessionClient.detectIntent(request);
+                const result = responses[0].queryResult.fulfillmenText;
 
-                    console.log('result', result);
+                console.log('result', result);
 
-                    message.channel.send(result);
-                } catch (e) {}
-            };
+                message.channel.send(result);
+            } catch (e) {}
 
             if (message.content.toLowerCase().includes('voice')) {
                 const channel = message.member.voiceChannel;
