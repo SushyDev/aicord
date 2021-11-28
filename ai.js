@@ -78,6 +78,8 @@ client.on('ready', () => {
         client.on('message', async (message) => {
             if (message.author.id === client.user.id) return;
 
+            console.log(new Date().toDateString);
+
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
             }
@@ -92,7 +94,7 @@ client.on('ready', () => {
 
             //Dumbass
             if (response.intent.isFallback) {
-                console.info("Didn't understand");
+                console.info("  Didn't understand");
                 return;
             }
 
