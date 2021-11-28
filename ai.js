@@ -102,6 +102,8 @@ client.on('ready', () => {
 
             if (!response) return;
 
+            console.log(message.guild.name, message.channel.name)
+
             console.log(`  Query: ${response.queryText}`);
 
             console.log(`  Response: ${response.fulfillmentText}`);
