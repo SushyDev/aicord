@@ -99,27 +99,27 @@ client.on('ready', () => {
                 try {
                     const sessionId = uuid.v4();
                     const sessionClient = new dialogflow.SessionClient({
-                        keyFilename: "./key.json"
+                        keyFilename: './key.json',
                     });
-                    const sessionPath = sessionClient.projectAgentSessionPath(projectId,sessionId);
+                    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
                     const request = {
                         session: sessionPath,
                         queryInput: {
                             text: {
                                 text: message.content,
-                                languageCode: "en-US"
-                            }
-                        }
-                    }
+                                languageCode: 'en-US',
+                            },
+                        },
+                    };
 
-                    const response = await sessionClient.detectIntent(request)
+                    const response = await sessionClient.detectIntent(request);
                     const result = responses[0].queryResult.fulfillmenText;
 
                     console.log('result', result);
 
                     message.channel.send(result);
-                }
-            }
+                } catch (e) {}
+            };
 
             if (message.content.toLowerCase().includes('voice')) {
                 const channel = message.member.voiceChannel;
