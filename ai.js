@@ -101,6 +101,7 @@ client.on('ready', () => {
             const response = await aiResponse(message.content);
 
             if (!response) return;
+            console.log(response);
 
             console.log(`  Query: ${response.queryText}`);
 
