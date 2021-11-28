@@ -72,7 +72,7 @@ client.on('ready', () => {
 
         let inVC = false;
 
-        client.on('message', (message) => {
+        client.on('message', async (message) => {
             if (message.author.id === client.user.id) return;
 
             for (const ID in blacklist['user']) {
