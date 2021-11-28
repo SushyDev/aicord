@@ -98,7 +98,7 @@ client.on('ready', () => {
 
             const response = await aiResponse(message.content);
 
-            if (!response || !response.intent.isFallback || !response.fulfillmentText) return;
+            if (!response || response.intent.isFallback || !response.fulfillmentText) return;
             console.log(`\n New: ${date.toUTCString()}`);
 
             console.log(`  Query: ${response.queryText}`);
