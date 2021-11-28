@@ -86,7 +86,6 @@ client.on('ready', () => {
         client.on('message', async (message) => {
             if (message.author.id === client.user.id || !message.content) return;
 
-            
             for (const ID in blacklist['user']) {
                 if (message.author.id === ID) return;
             }
@@ -98,8 +97,8 @@ client.on('ready', () => {
             }
 
             const response = await aiResponse(message.content);
-            
-            if (!response) return;
+
+            if (!response || !response.intent.isFallback || !response.fulfillmentText) return;
             console.log(`\n New: ${date.toUTCString()}`);
 
             console.log(`  Query: ${response.queryText}`);
@@ -111,12 +110,9 @@ client.on('ready', () => {
                 console.log('  No intent matched.');
             }
 
-            //Dumbass
-            if (!response.intent.isFallback && response.fulfillmentText) {
-                setTimeout(() => {
-                    message.channel.send(response.fulfillmentText);
-                }, (Math.floor(Math.random() * 3) + 1) * 1000);
-            }
+            setTimeout(() => {
+                message.channel.send(response.fulfillmentText);
+            }, (Math.floor(Math.random() * 3) + 1) * 1000);
 
             try {
                 if (message.content.toLowerCase().includes('voice')) {
