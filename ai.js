@@ -31,9 +31,14 @@ const aiResponse = async (message) => {
     };
 
     // Send request and log result
-    const responses = await sessionClient.detectIntent(request);
-    const result = responses[0].queryResult;
-    return result;
+    try {
+        const responses = await sessionClient.detectIntent(request);
+        const result = responses[0].queryResult;
+        return result;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
 };
 
 const aiTrain = async (message) => {
@@ -95,7 +100,8 @@ client.on('ready', () => {
 
             const response = await aiResponse(message.content);
 
-            
+            if (!response) return;
+
             console.log(`  Query: ${response.queryText}`);
 
             //Dumbass
