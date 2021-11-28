@@ -95,13 +95,15 @@ client.on('ready', () => {
 
             const response = await aiResponse(message.content);
 
+            
+            console.log(`  Query: ${response.queryText}`);
+
             //Dumbass
             if (response.intent.isFallback) {
                 console.info("  Didn't understand");
                 return;
             }
 
-            console.log(`  Query: ${response.queryText}`);
             console.log(`  Response: ${response.fulfillmentText}`);
             if (response.intent) {
                 console.log(`  Intent: ${response.intent.displayName}`);
