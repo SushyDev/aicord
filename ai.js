@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js-selfbot');
 const client = new Discord.Client({intents: ['GUILDS', 'GUILD_MESSAGES']});
 const fs = require('fs');
 const Dialogflow = require('@google-cloud/dialogflow');
