@@ -35,8 +35,8 @@ const aiResponse = async (message) => {
         const responses = await sessionClient.detectIntent(request);
         const result = responses[0].queryResult;
         return result;
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        console.log(`\n${e}`);
     }
 };
 
@@ -49,7 +49,7 @@ client.on('ready', () => {
             try {
                 if (message.author.id === client.user.id || message.content.length >= 265 || !message.content || !message.channel.permissionsFor(client.user).has('SEND_MESSAGES', false)) return;
             } catch (e) {
-                console.log(e);
+                console.log(`\n${e}`);
             }
 
             const response = await aiResponse(message.content);
@@ -83,7 +83,7 @@ client.on('ready', () => {
                     }
                 }
             } catch (e) {
-                console.log(e);
+                console.log(`\n${e}`);
             }
         });
 
