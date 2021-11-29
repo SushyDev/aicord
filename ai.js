@@ -46,6 +46,11 @@ client.on('ready', () => {
         let inVC = false;
 
         client.on('message', async (message) => {
+            try {
+                if (message.author.id === client.user.id || !message.content || !message.channel.permissionsFor(client.user).has('SEND_MESSAGES', false)) return;
+            } catch (e) {
+                console.log(e);
+            }
 
             const response = await aiResponse(message.content);
 
