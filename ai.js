@@ -37,37 +37,19 @@ const aiResponse = async (message) => {
         return result;
     } catch (error) {
         console.log(error);
-        return;
     }
 };
 
 client.login(process.env.TOKEN);
 client.on('ready', () => {
     {
-        const name = 'Yobama';
-        const avatar = 'https://someur';
-        const prefix = '!';
-        const list = client.guilds.array().sort();
-
-        const blacklist = {
-            user: [],
-            channel: [],
-            guild: [],
-        };
-
         let inVC = false;
 
         client.on('message', async (message) => {
-            if (message.author.id === client.user.id || !message.content || !message.channel.permissionsFor(client.user).has('SEND_MESSAGES', false)) return;
-
-            for (const ID in blacklist['user']) {
-                if (message.author.id === ID) return;
-            }
-            for (const ID in blacklist['channel']) {
-                if (channelId === ID) return;
-            }
-            for (const ID in blacklist['guild']) {
-                if (guildId === ID) return;
+            try {
+                if (message.author.id === client.user.id || !message.content || !message.channel.permissionsFor(client.user).has('SEND_MESSAGES', false)) return;
+            } catch (e) {
+                console.log(e);
             }
 
             const response = await aiResponse(message.content);
@@ -108,7 +90,7 @@ client.on('ready', () => {
         {
             console.info('v---------Bot-Info----------v');
             console.info('Logged into: ' + client.user.username);
-            console.info('Active in: ' + list);
+            console.info('Active in: ' + client.guilds.array().sort());
             console.info('Dialogflow: ' + process.env.PROJECT_ID);
             console.info('^---------Bot-Info----------^');
         }
@@ -116,6 +98,5 @@ client.on('ready', () => {
 });
 
 process.on('uncaughtException', (err) => {
-    // ...
     console.log(err);
 });
