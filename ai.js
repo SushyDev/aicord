@@ -90,7 +90,7 @@ client.on('ready', () => {
         {
             console.info('v---------Bot-Info----------v');
             console.info('Logged into: ' + client.user.username);
-            console.info('Active in: ' + client.guilds.array().sort());
+            // console.info('Active in: ' + client.guilds.array().sort());
             console.info('Dialogflow: ' + process.env.PROJECT_ID);
             console.info('^---------Bot-Info----------^');
         }
